@@ -8,15 +8,15 @@ linhas, colunas = df.shape
 # Dicionário de renomeação
 novos_nomes = {
     'work_year': 'ano',
-    'experience_level': 'senioridade',
-    'employment_type': 'contrato',
+    'experience_level': 'nivel_experiencia',
+    'employment_type': 'tipo_emprego',
     'job_title': 'cargo',
     'salary': 'salario',
     'salary_currency': 'moeda',
-    'salary_in_usd': 'usd',
+    'salary_in_usd': 'salario_usd',
     'employee_residence': 'residencia',
-    'remote_ratio': 'remoto',
-    'company_location': 'empresa',
+    'remote_ratio': 'taxa_remoto',
+    'company_location': 'localizacao_empresa',
     'company_size': 'tamanho_empresa'
 }
 # Aplicando renomeação

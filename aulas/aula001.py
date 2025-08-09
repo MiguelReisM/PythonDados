@@ -73,4 +73,7 @@ print(df['remoto'].value_counts(), end='\n\n')
 
 print('Contagem do tamanho da empresa:')
 print(df['tamanho_empresa'].value_counts(), end='\n\n')
+
+# Estatísticas descritivas para colunas categóricas
+print(df.describe(include='object'))
 print_sep()

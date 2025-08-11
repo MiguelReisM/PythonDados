@@ -2,10 +2,13 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.io as pio
 
 # Carregar os dados
 url = "https://raw.githubusercontent.com/guilhermeonrails/data-jobs/refs/heads/main/salaries.csv"
 df = pd.read_csv(url)
+pio.renderers.default = "browser"  # força abrir no navegador padrão
 
 # Renomear colunas para português
 renomeacoes = {
@@ -83,8 +86,8 @@ plt.title('Boxplot do salário', fontsize=14)
 plt.xlabel('Salario em USD', fontsize=12)
 
 plt.show()
-'''
-#
+
+# Gráfico de dispersão do salário anual em USD por ano e nível de senioridade
 ordem_senioridade = ['junior', 'pleno', 'senior', 'executivo']
 plt.figure(figsize=(8, 5))
 sns.boxenplot(data=df_limpo, x='senioridade', y='usd', order=ordem_senioridade, palette='Set2', hue='senioridade')
@@ -93,3 +96,27 @@ plt.xlabel('Nível de Senioridade', fontsize=12)
 plt.ylabel('Salário Anual (USD)', fontsize=12)
 
 plt.show()
+
+# Gráfico interativo com Plotly
+senhioridade_media_salario = df_limpo.groupby('senioridade')['usd'].mean().sort_values(ascending=False).reset_index()
+
+fig = px.bar(senhioridade_media_salario,
+            x='senioridade',
+            y='usd',
+            title='Salário médio anual por nível de senioridade',
+            labels={'usd': 'Salário médio (USD)', 'senioridade': 'Nível de Senioridade'})
+
+fig.write_html("grafico.html", auto_open=True)
+'''
+# Grafico de pizza para a coluna remoto
+remoto_contagem = df_limpo['remoto'].value_counts().reset_index()
+remoto_contagem.columns = ['tipo_trabalho', 'quantidade']
+
+fig = px.pie(remoto_contagem,
+            names='tipo_trabalho',
+            values='quantidade',
+            title='Proporção de tipos de trabalho (remoto, híbrido, presencial)')
+
+fig.update_traces(textinfo='percent+label')
+
+fig.write_html("grafico.html", auto_open=True)
